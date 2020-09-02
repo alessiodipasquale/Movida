@@ -29,6 +29,7 @@ abstract class Map<K extends Comparable<K>, V extends Object> {
 	
 	abstract public V search(K key) throws MovidaFileException;
 
+	abstract public int length();
 
 	
 	/*abstract public void put(K key, V value);
@@ -46,6 +47,6 @@ abstract class Map<K extends Comparable<K>, V extends Object> {
 	abstract public ArrayList<V> valueList();
 
 	
-	abstract public int length();*/
+	*/
 	
 }

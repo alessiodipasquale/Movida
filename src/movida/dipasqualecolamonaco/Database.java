@@ -33,15 +33,20 @@ public class Database {
 				movieMap = new AVL<String, Movie>();
 				break;
 			}
-			case ArrayOrdinato: {
-				personMap = new ArrayOrdinato<String, Person>();
-				movieMap = new ArrayOrdinato<String, Movie>();
+			case HashConcatenamento: {
+				personMap = new HashConcatenamento<String, Person>(10);
+				movieMap = new HashConcatenamento<String, Movie>(10);
 				break;
 			}
 			default:
 				new IllegalArgumentException("Errore nella configurazione").printStackTrace();
 				
 		}*/
+
+		personMap = new HashConcatenamento<String, Person>(10);
+		movieMap = new HashConcatenamento<String, Movie>(10);
+		
+		//System.out.println(personMap.toString());
 		
 		List<Person> cast;
 		Person personToAdd = null;
@@ -51,28 +56,35 @@ public class Database {
 			cast = new ArrayList<Person>();
 
 			line = scan.nextLine();		
-			System.out.println(line);
 			title = formatLine(line);
-			
+
 			line = scan.nextLine();
 			year = Integer.parseInt(formatLine(line));
 			
 			line = scan.nextLine();
 			directorName = formatLine(line);	
+
 			director = new Person(directorName);
 			personMap.putIfAbsent(directorName, director);
+			
+			//System.out.println(personMap.toString());
+
+			
 			director = personMap.search(directorName);
 			
+			
 			line = scan.nextLine();
-			String[] names = formatLine(line).split(",");
+			String[] names = formatLine(line).split(", ");
+
 
 			for (int i = 0; i < names.length; i++)  		
-			{
+			{			
 				String name = names[i].trim().toLowerCase();
 				personToAdd = new Person(name);
 				personMap.putIfAbsent(name, personToAdd);
 				cast.add(personMap.search(name)); 	
 			}
+			
 
 			line = scan.nextLine();
 			votes = Integer.parseInt(formatLine(line));
@@ -93,11 +105,15 @@ public class Database {
 				scan.nextLine();				
 			}
 		}
+		
+		//TEST
+		System.out.println("Conclusa lettura");
+		String title2 = "air force one";
+		System.out.println(movieMap.search(title2).getDirector().getName());
+
+		
+		
 		scan.close();	
-	
-
-	
-
 	}
 	
 	private String formatLine(String line) {
