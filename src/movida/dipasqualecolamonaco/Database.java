@@ -12,9 +12,9 @@ import movida.commons.MapImplementation;
 
 
 public class Database {
-	private MapImplementation selectedMap;
-	private Map<String, Person> personMap;
-	private Map<String, Movie> movieMap;
+	private MapImplementation selectedStructure;
+	private Map<String, Person> personData;
+	private Map<String, Movie> movieData;
 	
 	public void load(final File f) throws MovidaFileException, FileNotFoundException  {
 		
@@ -27,26 +27,24 @@ public class Database {
 		int year = 0;
 		int votes = 0;
 		
-		/*switch(selectedMap) {
+		switch(selectedStructure) {
 			case AVL: {
-				personMap = new AVL<String, Person>();
-				movieMap = new AVL<String, Movie>();
+				personData = new AVL<String, Person>();
+				movieData = new AVL<String, Movie>();
 				break;
 			}
 			case HashConcatenamento: {
-				personMap = new HashConcatenamento<String, Person>(10);
-				movieMap = new HashConcatenamento<String, Movie>(10);
+				personData = new HashConcatenamento<String, Person>(10);
+				movieData = new HashConcatenamento<String, Movie>(10);
 				break;
 			}
 			default:
 				new IllegalArgumentException("Errore nella configurazione").printStackTrace();
 				
-		}*/
+		}
 
-		personMap = new HashConcatenamento<String, Person>(10);
-		movieMap = new HashConcatenamento<String, Movie>(10);
 		
-		//System.out.println(personMap.toString());
+		//System.out.println(personData.toString());
 		
 		List<Person> cast;
 		Person personToAdd = null;
@@ -65,12 +63,12 @@ public class Database {
 			directorName = formatLine(line);	
 
 			director = new Person(directorName);
-			personMap.putIfAbsent(directorName, director);
+			personData.putIfAbsent(directorName, director);
 			
-			//System.out.println(personMap.toString());
+			//System.out.println(personData.toString());
 
 			
-			director = personMap.search(directorName);
+			director = personData.search(directorName);
 			
 			
 			line = scan.nextLine();
@@ -81,8 +79,8 @@ public class Database {
 			{			
 				String name = names[i].trim().toLowerCase();
 				personToAdd = new Person(name);
-				personMap.putIfAbsent(name, personToAdd);
-				cast.add(personMap.search(name)); 	
+				personData.putIfAbsent(name, personToAdd);
+				cast.add(personData.search(name)); 	
 			}
 			
 
@@ -93,12 +91,12 @@ public class Database {
 			Movie movieToAdd = new Movie(title, year, votes, castArray, director);
 			
 			//popola lista di film per ogni attore
-			/*for (Person p : movieToAdd.getCast())
+			for (Person p : movieToAdd.getCast())
 			{
 				p.getMovies().add(movieToAdd);
-			}*/
+			}
 			
-			movieMap.putIfAbsent(movieToAdd.getTitle(), movieToAdd);
+			movieData.putIfAbsent(movieToAdd.getTitle(), movieToAdd);
 			
 			if (scan.hasNextLine())
 			{
@@ -108,18 +106,28 @@ public class Database {
 		
 		//TEST
 		System.out.println("Conclusa lettura");
-		String title2 = "air force one";
-		System.out.println(movieMap.search(title2).getDirector().getName());
 
 		
 		
 		scan.close();	
 	}
 	
+	public Map<String, Person> getPersonData() {
+		return personData;
+	}
+
+	public Map<String, Movie> getMovieData() {
+		return movieData;
+	}
+	
 	private String formatLine(String line) {
 		int index = line.indexOf(':');
 		line = line.substring(index + 1, line.length());
 		return line.trim().toLowerCase();
+	}
+	
+	public void setStructure (MapImplementation s) {
+		selectedStructure = s;
 	}
 
 }

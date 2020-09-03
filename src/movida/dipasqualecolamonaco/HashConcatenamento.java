@@ -2,7 +2,9 @@ package movida.dipasqualecolamonaco;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class HashConcatenamento<K extends Comparable<K>, V extends Object> extends Map<K,V> 
 {
@@ -21,7 +23,17 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 	}
 
 	public void delete(K key) {
-		
+		int hash = Math.abs(key.hashCode() % length);
+		if(m[hash].getFirst().key.equals(key)) m[hash].removeFirst();
+		else {
+			int i=1;
+			while(m[hash] != null) {
+				if(m[hash].get(i).key.equals(key)) {
+					m[hash].remove(i);
+				} else i++;
+			}
+		}
+
 	}
 	
 	@Override
@@ -52,6 +64,29 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 	public int length() {
 		return m.length;
 	}
+	
+	
+	@Override
+	public void clear() {
+		for(int i =0;i < m.length;i++) 
+		{
+			m[i] = null;
+		}
+	}
+	
+	@Override
+	public Set<Map<K, V>.Entry> entrySet() {
+		Set<Map<K, V>.Entry> temp = new HashSet<Map<K,V>.Entry>();
+		for (LinkedList<Map<K, V>.Entry> e : m)
+		{
+			for(Map<K,V>.Entry r: e) {
+				temp.add(e.element());
+			}
+		}
+		return temp;
+	}
+
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

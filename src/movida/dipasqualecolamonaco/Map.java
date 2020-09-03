@@ -30,18 +30,19 @@ abstract class Map<K extends Comparable<K>, V extends Object> {
 	abstract public V search(K key) throws MovidaFileException;
 
 	abstract public int length();
-
 	
+	abstract public void clear();
+
+	abstract public Set<Entry> entrySet();
+
+	abstract void delete(K key) throws MovidaFileException;
+
 	/*abstract public void put(K key, V value);
 
 	
-	abstract void delete(K key) throws MovidaFileException;
+		
 	
 	
-	abstract public void clear();
-	
-	
-	abstract public Set<Entry> entrySet();
 	
 	
 	abstract public ArrayList<V> valueList();
