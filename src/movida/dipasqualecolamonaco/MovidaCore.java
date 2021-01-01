@@ -21,8 +21,7 @@ public class MovidaCore implements IMovidaDB{
 		
 	}
 	public static void main(String[] args) throws MovidaFileException, FileNotFoundException {
-		//this.loadFromFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/test.txt"));
-	
+		//loadFromFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/test.txt"));
 	}
 	
 	

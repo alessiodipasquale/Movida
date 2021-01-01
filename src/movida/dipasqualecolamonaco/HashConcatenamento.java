@@ -26,10 +26,11 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 		int hash = Math.abs(key.hashCode() % length);
 		if(m[hash].getFirst().key.equals(key)) m[hash].removeFirst();
 		else {
-			int i=1;
+			int i=0;
 			while(m[hash] != null) {
 				if(m[hash].get(i).key.equals(key)) {
 					m[hash].remove(i);
+					break;
 				} else i++;
 			}
 		}
@@ -62,7 +63,13 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 	
 	@Override
 	public int length() {
-		return m.length;
+		int count = 0;
+		int i=0;
+		while(i<m.length) {
+			count+=m[i].size();
+			i++;
+		}
+		return count;
 	}
 	
 	

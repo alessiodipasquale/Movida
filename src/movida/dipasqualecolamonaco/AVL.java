@@ -1,6 +1,7 @@
 package movida.dipasqualecolamonaco;
 
 import java.lang.reflect.Array;
+import java.util.Set;
 
 public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	V t;
@@ -21,4 +22,22 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	/*public V search(K key) {
 		
 	}*/
+
+	@Override
+	public int length() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Set<Map<K, V>.Entry> entrySet() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
