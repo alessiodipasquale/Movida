@@ -83,14 +83,17 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 	
 	@Override
 	public Set<Map<K, V>.Entry> entrySet() {
-		Set<Map<K, V>.Entry> temp = new HashSet<Map<K,V>.Entry>();
+		Set<Map<K, V>.Entry> out = new HashSet<Map<K,V>.Entry>();
 		for (LinkedList<Map<K, V>.Entry> e : m)
 		{
-			for(Map<K,V>.Entry r: e) {
-				temp.add(e.element());
+			while(!e.isEmpty()) {
+				Entry tmp = e.getFirst();
+				e.removeFirst();
+				out.add(tmp);
 			}
 		}
-		return temp;
+		//System.out.println(out.toString());
+		return out;
 	}
 
 	

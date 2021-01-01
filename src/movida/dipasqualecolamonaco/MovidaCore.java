@@ -20,9 +20,9 @@ public class MovidaCore implements IMovidaDB{
 	MovidaCore() {
 		
 	}
-	public static void main(String[] args) throws MovidaFileException, FileNotFoundException {
+	/*public static void main(String[] args) throws MovidaFileException, FileNotFoundException {
 		//loadFromFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/test.txt"));
-	}
+	}*/
 	
 	
 	@Override
@@ -45,8 +45,10 @@ public class MovidaCore implements IMovidaDB{
 	public void saveToFile(File f) {
 
 		try {
+			System.out.println(movieData.toString()+'\n');
 			FileWriter save = new FileWriter(f);
 			for (Map<String, Movie>.Entry e : movieData.entrySet()) {
+				System.out.println(e.value.getTitle());
 				save.append("Title:" + "\t" + e.value.getTitle() + "\n");
 
 				save.append("Year:" + "\t" + e.value.getYear() + "\n");
