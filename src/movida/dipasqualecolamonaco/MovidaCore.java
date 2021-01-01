@@ -45,10 +45,8 @@ public class MovidaCore implements IMovidaDB{
 	public void saveToFile(File f) {
 
 		try {
-			System.out.println(movieData.toString()+'\n');
 			FileWriter save = new FileWriter(f);
 			for (Map<String, Movie>.Entry e : movieData.entrySet()) {
-				System.out.println(e.value.getTitle());
 				save.append("Title:" + "\t" + e.value.getTitle() + "\n");
 
 				save.append("Year:" + "\t" + e.value.getYear() + "\n");
@@ -68,7 +66,7 @@ public class MovidaCore implements IMovidaDB{
 				save.append("\n");
 
 			}
-
+			System.out.println("Scrittura su file completata.");
 			save.close();
 		} catch (IOException e) {
 			System.out.println("Impossibile aprire il file.");
@@ -96,6 +94,7 @@ public class MovidaCore implements IMovidaDB{
 	public boolean deleteMovieByTitle(String title) {
 		try {
 			movieData.delete(title);
+			System.out.println("Eliminazione film completata.");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,11 +104,13 @@ public class MovidaCore implements IMovidaDB{
 	
 	@Override
 	public Movie getMovieByTitle(String title) {
+		System.out.println("Ricerca film completata.");
 		return movieData.search(title.trim().toLowerCase());
 	}
 
 	@Override
 	public Person getPersonByName(String name) {
+		System.out.println("Ricerca persona completata.");
 		return personData.search(name.trim().toLowerCase());
 
 	}

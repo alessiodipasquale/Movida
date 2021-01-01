@@ -95,6 +95,7 @@ public class Database {
 			{
 				p.getMovies().add(movieToAdd);
 			}
+			director.getMovies().add(movieToAdd);
 			
 			movieData.putIfAbsent(movieToAdd.getTitle(), movieToAdd);
 			
