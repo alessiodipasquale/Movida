@@ -46,7 +46,7 @@ public class MovidaCore implements IMovidaDB{
 
 		try {
 			FileWriter save = new FileWriter(f);
-			for (Map<String, Movie>.Entry e : movieData.entrySet()) {
+			for (Map<String, Movie>.Data e : movieData.getData()) {
 				save.append("Title:" + "\t" + e.value.getTitle() + "\n");
 
 				save.append("Year:" + "\t" + e.value.getYear() + "\n");
@@ -119,7 +119,7 @@ public class MovidaCore implements IMovidaDB{
 	public Movie[] getAllMovies() {
 		Movie[] arr = new Movie[movieData.length()];
 		int i = 0;
-		for (Map<String, Movie>.Entry e : movieData.entrySet()) {
+		for (Map<String, Movie>.Data e : movieData.getData()) {
 			arr[i++] = e.getValue();
 		}
 		return arr;
@@ -129,7 +129,7 @@ public class MovidaCore implements IMovidaDB{
 	public Person[] getAllPeople() {
 		Person[] arr = new Person[personData.length()];
 		int i = 0;
-		for (Map<String, Person>.Entry e : personData.entrySet()) {
+		for (Map<String, Person>.Data e : personData.getData()) {
 			arr[i++] = e.getValue();
 		}
 		return arr;

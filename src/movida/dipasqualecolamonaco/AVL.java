@@ -36,7 +36,7 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	}
 
 	@Override
-	public Set<Map<K, V>.Entry> entrySet() {
+	public Set<Map<K, V>.Data> getData() {
 		// TODO Auto-generated method stub
 		return null;
 	}

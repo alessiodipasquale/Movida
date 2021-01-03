@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class HashConcatenamento<K extends Comparable<K>, V extends Object> extends Map<K,V> 
 {
-	protected LinkedList<Entry>[] m;
+	protected LinkedList<Data>[] m;
 	private int length = 0;
 	
 	public HashConcatenamento(int l)
@@ -17,7 +17,7 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 		m =  new LinkedList[length];
 		for(int i =0;i < m.length;i++) 
 		{
-			m[i] = new LinkedList<Entry>();
+			m[i] = new LinkedList<Data>();
 		}
 		
 	}
@@ -40,7 +40,7 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 	@Override
 	public void putIfAbsent(K key, V value) {
 		int hash = Math.abs(key.hashCode() % length);
-		m[hash].add(new Entry(key,value));
+		m[hash].add(new Data(key,value));
 	}
 	
 	
@@ -82,12 +82,12 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 	}
 	
 	@Override
-	public Set<Map<K, V>.Entry> entrySet() {
-		Set<Map<K, V>.Entry> out = new HashSet<Map<K,V>.Entry>();
-		for (LinkedList<Map<K, V>.Entry> e : m)
+	public Set<Map<K, V>.Data> getData() {
+		Set<Map<K, V>.Data> out = new HashSet<Map<K,V>.Data>();
+		for (LinkedList<Map<K, V>.Data> e : m)
 		{
 			while(!e.isEmpty()) {
-				Entry tmp = e.getFirst();
+				Data tmp = e.getFirst();
 				e.removeFirst();
 				out.add(tmp);
 			}

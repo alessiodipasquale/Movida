@@ -7,7 +7,7 @@ import movida.commons.MovidaFileException;
 
 abstract class Map<K extends Comparable<K>, V extends Object> {
 	
-	final class Entry  {
+	final class Data  {
 		protected K key;
 		protected V value;
 
@@ -19,7 +19,7 @@ abstract class Map<K extends Comparable<K>, V extends Object> {
 			return value;
 		}
 		
-		 Entry(K key, V value) {
+		Data(K key, V value) {
 			this.key = key;
 			this.value = value;
 		}
@@ -33,7 +33,7 @@ abstract class Map<K extends Comparable<K>, V extends Object> {
 	
 	abstract public void clear();
 
-	abstract public Set<Entry> entrySet();
+	abstract public Set<Data> getData();
 
 	abstract void delete(K key) throws MovidaFileException;
 
