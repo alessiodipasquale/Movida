@@ -86,10 +86,11 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 		Set<Map<K, V>.Data> out = new HashSet<Map<K,V>.Data>();
 		for (LinkedList<Map<K, V>.Data> e : m)
 		{
-			while(!e.isEmpty()) {
-				Data tmp = e.getFirst();
-				e.removeFirst();
+			int i=0;
+			while(i<e.size()) {
+				Data tmp = e.get(i);
 				out.add(tmp);
+				i++;
 			}
 		}
 		//System.out.println(out.toString());

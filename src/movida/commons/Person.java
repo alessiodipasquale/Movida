@@ -45,4 +45,11 @@ public class Person {
 	public int numberOfMovies() {
 		return movies.size();
 	}
+	
+	@Override
+    public String toString() 
+    { 
+        return getName();
+    } 
 }
+

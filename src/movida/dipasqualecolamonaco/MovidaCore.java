@@ -1,5 +1,5 @@
 package movida.dipasqualecolamonaco;
-
+import movida.commons.*;
 import java.io.File;
 
 import java.io.FileNotFoundException;
@@ -12,11 +12,14 @@ import movida.commons.MovidaFileException;
 import movida.commons.Movie;
 import movida.commons.Person;
 
-public class MovidaCore implements IMovidaDB{
+public class MovidaCore implements IMovidaDB, IMovidaConfig{
 	Database db;
 	Map<String, Movie> movieData;
 	Map<String, Person> personData;
 	
+	SortingAlgorithm algorithm = SortingAlgorithm.QuickSort;
+	MapImplementation map = MapImplementation.HashConcatenamento;
+
 	MovidaCore() {
 		
 	}
@@ -28,7 +31,7 @@ public class MovidaCore implements IMovidaDB{
 	@Override
 	public void loadFromFile(File f) {
 		Database db = new Database();
-		db.setStructure(MapImplementation.HashConcatenamento);
+		db.setStructure(this.map);
 		try {
 			db.load(f);
 		}catch (Exception err) {
@@ -121,6 +124,7 @@ public class MovidaCore implements IMovidaDB{
 		int i = 0;
 		for (Map<String, Movie>.Data e : movieData.getData()) {
 			arr[i++] = e.getValue();
+			//System.out.println(e.getValue().getTitle());
 		}
 		return arr;
 	}
@@ -128,12 +132,52 @@ public class MovidaCore implements IMovidaDB{
 	@Override
 	public Person[] getAllPeople() {
 		Person[] arr = new Person[personData.length()];
-		int i = 0;
+		int i = 0;			
 		for (Map<String, Person>.Data e : personData.getData()) {
 			arr[i++] = e.getValue();
+			//System.out.println(e.getValue().getName());
 		}
 		return arr;
 	}
+
+	//FINE DB E INIZIO CONFIG
+	
+	@Override
+	public boolean setSort(SortingAlgorithm a) {
+		switch(a) {
+			case QuickSort: {
+				this.algorithm = SortingAlgorithm.QuickSort;
+				return true;
+			}
+			case SelectionSort: {
+				this.algorithm = SortingAlgorithm.SelectionSort;
+				return true;
+			}
+			default: return false;
+		}
+	}
+	
+	@Override
+	public boolean setMap(MapImplementation m) {
+		switch(m) {
+		case HashConcatenamento: {
+			this.map = MapImplementation.HashConcatenamento;
+			this.db.setStructure(MapImplementation.HashConcatenamento);
+			// DA FARE LA COPIA
+			return true;
+		}
+		case AVL: {
+			this.map = MapImplementation.AVL;
+			this.db.setStructure(MapImplementation.AVL);
+			// DA FARE LA COPIA
+			return true;
+		}
+		default:
+			return false;
+			
+		}
+	}
+
 
 
 }
