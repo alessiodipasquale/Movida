@@ -30,7 +30,7 @@ public class QuickSort{
 	private static <K extends Comparable<K>> int partition(K array[], int low, int high, Comparator<K> c) {
 		int i = low;
 		int j= high + 1;
-		int m = ThreadLocalRandom.current().nextInt(i,j);
+		int m = ThreadLocalRandom.current().nextInt(i,j); //da togliere
 		K pivot = array[m];
 		
 		swap(array, low, m);

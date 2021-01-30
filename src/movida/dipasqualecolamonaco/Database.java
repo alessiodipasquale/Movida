@@ -108,7 +108,7 @@ public class Database {
 		//TEST
 		System.out.println("Conclusa lettura");
 
-		
+		System.out.println(personData.length());
 		
 		scan.close();	
 	}

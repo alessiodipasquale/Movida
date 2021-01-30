@@ -23,10 +23,6 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 	MovidaCore() {
 		
 	}
-	/*public static void main(String[] args) throws MovidaFileException, FileNotFoundException {
-		//loadFromFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/test.txt"));
-	}*/
-	
 	
 	@Override
 	public void loadFromFile(File f) {
@@ -115,7 +111,6 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 	public Person getPersonByName(String name) {
 		System.out.println("Ricerca persona completata.");
 		return personData.search(name.trim().toLowerCase());
-
 	}
 	
 	@Override

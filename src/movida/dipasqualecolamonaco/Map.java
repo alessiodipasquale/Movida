@@ -1,6 +1,5 @@
 package movida.dipasqualecolamonaco;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import movida.commons.MovidaFileException;
