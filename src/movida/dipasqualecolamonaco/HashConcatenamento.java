@@ -1,6 +1,6 @@
 package movida.dipasqualecolamonaco;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -97,7 +97,7 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 		}
 	}
 	
-	@Override
+	/*@Override
 	public Set<Map<K, V>.Data> getData() {
 		Set<Map<K, V>.Data> out = new HashSet<Map<K,V>.Data>();
 		for (LinkedList<Map<K, V>.Data> e : m)
@@ -111,8 +111,23 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 		}
 		//System.out.println(out.toString());
 		return out;
-	}
+	}*/
 
+	@Override
+	public ArrayList<V> getData() {
+		ArrayList<V> out = new ArrayList<V>();
+		for (LinkedList<Map<K, V>.Data> e : m)
+		{
+			int i=0;
+			while(i<e.size()) {
+				Data tmp = e.get(i);
+				out.add(tmp.value);
+				i++;
+			}
+		}
+		//System.out.println(out.toString());
+		return out;
+	}
 	
 	@Override
 	public String toString() {

@@ -1,4 +1,11 @@
 package movida.dipasqualecolamonaco;
+import java.io.File;
+
+import movida.commons.MapImplementation;
+import movida.commons.Movie;
+import movida.commons.SortingAlgorithm;
+
+
 
 import java.io.File;
 
@@ -9,6 +16,8 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		mc = new MovidaCore();
+		mc.setMap(MapImplementation.HashConcatenamento);
+		//mc.setSort(SortingAlgorithm.QuickSort);
 		mc.loadFromFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/test.txt"));
 		//System.out.println(mc.movieData.length());
 		//mc.deleteMovieByTitle("scarface");
@@ -18,6 +27,11 @@ public class Main {
 			System.out.println(e);
 		}*/
 		
+		/*Movie[] m = mc.getAllMovies();
+		int i=0;
+		while(i<m.length) {
+			System.out.println(m[i++].getTitle());
+		}*/
 		//mc.saveToFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/output.txt"));
 
 	}

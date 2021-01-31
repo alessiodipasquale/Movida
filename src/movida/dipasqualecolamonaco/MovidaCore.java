@@ -18,15 +18,14 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 	Map<String, Person> personData;
 	
 	SortingAlgorithm algorithm = SortingAlgorithm.QuickSort;
-	MapImplementation map = MapImplementation.AVL;
+	MapImplementation map = MapImplementation.HashConcatenamento;
 
 	MovidaCore() {
-		
+		this.db = new Database();
 	}
 	
 	@Override
 	public void loadFromFile(File f) {
-		Database db = new Database();
 		db.setStructure(this.map);
 		try {
 			db.load(f);
@@ -45,14 +44,14 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 
 		try {
 			FileWriter save = new FileWriter(f);
-			for (Map<String, Movie>.Data e : movieData.getData()) {
-				save.append("Title:" + "\t" + e.value.getTitle() + "\n");
+			for (Movie e : movieData.getData()) {
+				save.append("Title:" + "\t" + e.getTitle() + "\n");
 
-				save.append("Year:" + "\t" + e.value.getYear() + "\n");
+				save.append("Year:" + "\t" + e.getYear() + "\n");
 
-				save.append("Director:" + "\t" + e.value.getDirector().getName() + "\n");
+				save.append("Director:" + "\t" + e.getDirector().getName() + "\n");
 
-				Person cast[] = e.value.getCast();
+				Person cast[] = e.getCast();
 				save.append("Cast:" + "\t");
 				for (int i = 0; i < cast.length; i++) {
 					if (i == cast.length - 1)
@@ -61,7 +60,7 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 						save.append(cast[i].getName() + "," + "\t");
 				}
 
-				save.append("Votes" + "\t" + e.value.getVotes() + "\n");
+				save.append("Votes" + "\t" + e.getVotes() + "\n");
 				save.append("\n");
 
 			}
@@ -117,8 +116,8 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 	public Movie[] getAllMovies() {
 		Movie[] arr = new Movie[movieData.length()];
 		int i = 0;
-		for (Map<String, Movie>.Data e : movieData.getData()) {
-			arr[i++] = e.getValue();
+		for (Movie e : movieData.getData()) {
+			arr[i++] = e;
 			//System.out.println(e.getValue().getTitle());
 		}
 		return arr;
@@ -128,8 +127,8 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 	public Person[] getAllPeople() {
 		Person[] arr = new Person[personData.length()];
 		int i = 0;			
-		for (Map<String, Person>.Data e : personData.getData()) {
-			arr[i++] = e.getValue();
+		for (Person e : personData.getData()) {
+			arr[i++] = e;
 			//System.out.println(e.getValue().getName());
 		}
 		return arr;

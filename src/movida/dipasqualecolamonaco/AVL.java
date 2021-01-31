@@ -1,6 +1,7 @@
 package movida.dipasqualecolamonaco;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
@@ -149,9 +150,24 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	}
 
 	@Override
-	public Set<Map<K, V>.Data> getData() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<V> getData() {
+		return extractValues(this.root);
+	} 
+	
+	private ArrayList<V> extractValues(Node n) {
+		ArrayList<V> result = new ArrayList<V>();
+	    if (n.left != null) {
+	        result.addAll(extractValues(n.left));
+	    }
+
+	    if (n.right != null) {
+	        result.addAll(extractValues(n.right));
+	    }
+
+	    result.add((V)n.value);
+
+	    return result;
 	}
+  
 	
 }

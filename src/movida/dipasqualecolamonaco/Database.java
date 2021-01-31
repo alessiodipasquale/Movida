@@ -108,15 +108,6 @@ public class Database {
 		//TEST
 		System.out.println("Conclusa lettura");
 		
-		System.out.println(movieData.length());
-		System.out.println(personData.length());
-		
-		personData.delete("Robert De Niro");
-		System.out.println(personData.length());
-
-		System.out.println(movieData.search("Scarface").getYear());
-
-		
 		scan.close();	
 	}
 	
@@ -135,6 +126,7 @@ public class Database {
 	}
 	
 	public void setStructure (MapImplementation s) {
+		
 		selectedStructure = s;
 	}
 

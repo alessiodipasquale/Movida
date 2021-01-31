@@ -1,5 +1,6 @@
 package movida.dipasqualecolamonaco;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import movida.commons.MovidaFileException;
@@ -32,7 +33,7 @@ abstract class Map<K extends Comparable<K>, V extends Object> {
 	
 	abstract public void clear();
 
-	abstract public Set<Data> getData();
+	abstract public ArrayList<V> getData();
 
 	abstract void delete(K key) throws MovidaFileException;
 
