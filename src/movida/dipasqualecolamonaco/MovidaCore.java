@@ -18,7 +18,7 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 	Map<String, Person> personData;
 	
 	SortingAlgorithm algorithm = SortingAlgorithm.QuickSort;
-	MapImplementation map = MapImplementation.HashConcatenamento;
+	MapImplementation map = MapImplementation.AVL;
 
 	MovidaCore() {
 		

@@ -65,6 +65,7 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	public AVL() {}
 	
 	public void delete(K key) {
+		key = (K)key.toString().trim().toLowerCase();
 		this.root = this.delete(root,key);
 	}
 	
@@ -102,6 +103,7 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	
 	@Override
 	public void putIfAbsent(K key, V value) {
+		key = (K)key.toString().trim().toLowerCase();
 		this.root = this.insert(root, key, value);
 	}
 	
@@ -121,6 +123,7 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	
 	@Override
 	public V search(K key) throws KeyException {
+		key = (K)key.toString().trim().toLowerCase();
 		 Node current = root;
 	        while (current != null) {
 	            if (current.key.compareTo(key) == 0) {

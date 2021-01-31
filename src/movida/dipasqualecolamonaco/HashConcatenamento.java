@@ -23,35 +23,51 @@ public class HashConcatenamento<K extends Comparable<K>, V extends Object> exten
 	}
 
 	public void delete(K key) {
+		key = (K)key.toString().trim().toLowerCase();
 		int hash = Math.abs(key.hashCode() % length);
-		if(m[hash].getFirst().key.equals(key)) m[hash].removeFirst();
-		else {
-			int i=0;
-			while(m[hash] != null) {
-				if(m[hash].get(i).key.equals(key)) {
-					m[hash].remove(i);
-					break;
-				} else i++;
-			}
+		//if(m[hash].getFirst().key.equals(key)) m[hash].removeFirst();
+		//else {
+		int i=0;
+		while(i < m[hash].size()) {
+			if(m[hash].get(i).key.equals(key)) {
+				m[hash].remove(i);
+				break;
+			} else i++;
 		}
+		if (i == m[hash].size()) {
+			throw new KeyException();
+		}
+		//}
 
 	}
 	
 	@Override
 	public void putIfAbsent(K key, V value) {
+		key = (K)key.toString().trim().toLowerCase();
 		int hash = Math.abs(key.hashCode() % length);
-		m[hash].add(new Data(key,value));
+		int i = 0;
+		boolean insert = true;
+		while(i < m[hash].size()) {
+			if(m[hash].get(i).key.equals(key)) {
+				insert = false;
+				break;
+			}
+			i++;
+		}
+		if(insert)
+			m[hash].add(new Data(key,value));
 	}
 	
 	
 	@Override
 	public V search(K key) throws KeyException {
+		key = (K)key.toString().trim().toLowerCase();
 		int hash = Math.abs(key.hashCode() % length);
-		if(m[hash].getFirst().key.equals(key)) return (V)(m[hash].getFirst().value);
-		else if(m[hash].equals(null)) return null;
+		//if(m[hash].getFirst().key.equals(key)) return (V)(m[hash].getFirst().value);
+		if(m[hash].size() == 0) throw new KeyException();
 		else {
-			int i=1;
-			while(m[hash] != null) {
+			int i=0;
+			while(i < m[hash].size()) {
 				if(m[hash].get(i).key.equals(key)) {
 					return (V)(m[hash].get(i).value);
 				} else i++;
