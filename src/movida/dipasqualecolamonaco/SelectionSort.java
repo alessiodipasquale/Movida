@@ -21,12 +21,12 @@ public class SelectionSort {
 		assert low <= high;
 		assert high <= array.length;
 		
-		for(int i = low; i<high; ++i) {
+		for(int i = low; i<high; i++) {
 			
 			var minIndex = i;
 			
-			for(int j=i+1; j<high; ++j) {
-				if(c.compare(array[j], array[i]) < 0) {
+			for(int j=i+1; j<high; j++) {
+				if(c.compare(array[j], array[minIndex]) < 0) {
 					minIndex = j;
 				}
 			}

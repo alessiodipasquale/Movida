@@ -19,7 +19,7 @@ public class QuickSort{
 	}
 	
 	
-	public static <K extends Comparable<K>> void sort(K array[], int low, int high, Comparator<K> c) {
+	public static <T> void sort(T[] array, int low, int high, Comparator<T> c) {
 		if(low >= high)
 				return;
 		int m = partition(array, low, high, c);
@@ -27,30 +27,31 @@ public class QuickSort{
 		sort(array, m+1, high, c);
 	}
 	
-	private static <K extends Comparable<K>> int partition(K array[], int low, int high, Comparator<K> c) {
-		int i = low;
-		int j= high + 1;
-		int m = ThreadLocalRandom.current().nextInt(i,j); //da togliere
-		K pivot = array[m];
+	private static <T> int partition(T[] array, int low, int high, Comparator<T> c) {
+		int inf = low;
+		int sup= high + 1;
+		int pos = low + (int) Math.floor((high-low+1) * Math.random());
+		T pivot = array[pos];
 		
-		swap(array, low, m);
+		swap(array, low, pos);
 		
-		while(i<j) {
+		while(true) {
 			
 			do {
-				i++;
-			} while(c.compare(array[i], pivot)<0 && i<high);
+				inf++;
+			} while(c.compare(array[inf], pivot)<=0 && inf<high);
 			
 			do {
-				j--;
-			} while(c.compare(array[j], pivot)>0 && j>low);
+				sup--;
+			} while(c.compare(array[sup], pivot)>0);
 			
-			if (i<j) 
-				swap(array,i,j);
-			
+			if (inf<sup) {
+				swap(array,inf,sup);
+			} else break;
 		}
+		swap(array,low,sup);
 		
-		return j;	
+		return sup;	
 		
 	}
 	

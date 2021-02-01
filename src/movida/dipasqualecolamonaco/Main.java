@@ -3,6 +3,7 @@ import java.io.File;
 
 import movida.commons.MapImplementation;
 import movida.commons.Movie;
+import movida.commons.Person;
 import movida.commons.SortingAlgorithm;
 
 
@@ -17,6 +18,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		mc = new MovidaCore();
 		mc.setMap(MapImplementation.HashConcatenamento);
+		mc.setSort(SortingAlgorithm.QuickSort);
 		//mc.setSort(SortingAlgorithm.QuickSort);
 		mc.loadFromFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/test.txt"));
 		//System.out.println(mc.movieData.length());
@@ -32,7 +34,13 @@ public class Main {
 		while(i<m.length) {
 			System.out.println(m[i++].getTitle());
 		}*/
-		//mc.saveToFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/output.txt"));
+		
+		for(Person e: mc.searchMostActiveActors(5)) {
+			System.out.println(e.getName());
+		}
+		
+		
+		mc.saveToFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/output.txt"));
 
 	}
 

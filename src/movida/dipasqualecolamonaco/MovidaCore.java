@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import movida.commons.IMovidaDB;
 import movida.commons.MapImplementation;
@@ -12,7 +14,7 @@ import movida.commons.MovidaFileException;
 import movida.commons.Movie;
 import movida.commons.Person;
 
-public class MovidaCore implements IMovidaDB, IMovidaConfig{
+public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch{
 	Database db;
 	Map<String, Movie> movieData;
 	Map<String, Person> personData;
@@ -171,6 +173,108 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig{
 			
 		}
 	}
+
+	//FINE CONFIG INIZIO SEARCH
+	public Movie[] searchMoviesByTitle(String title) {
+		ArrayList<Movie> res = new ArrayList<Movie>();
+		for(Movie e: movieData.getData()) {
+			if(e.getTitle().contains(title.trim().toLowerCase()))
+				res.add(e);
+		}
+		return res.toArray(new Movie[res.size()]);
+	}
+	
+	public Movie[] searchMoviesInYear(Integer year) {
+		ArrayList<Movie> res = new ArrayList<Movie>();
+		for(Movie e: movieData.getData()) {
+			if(e.getYear().equals(year))
+				res.add(e);
+		}
+		return res.toArray(new Movie[res.size()]);
+	}
+	
+	public Movie[] searchMoviesDirectedBy(String name) {
+		ArrayList<Movie> res = new ArrayList<Movie>();
+		for(Movie e: movieData.getData()) {
+			if(e.getDirector().getName().contains(name.trim().toLowerCase()))
+				res.add(e);
+		}
+		return res.toArray(new Movie[res.size()]);
+	}
+	
+	public Movie[] searchMoviesStarredBy(String name) {
+		ArrayList<Movie> res = new ArrayList<Movie>();
+		for(Movie e: movieData.getData()) {
+			for(Person p: e.getCast()) {
+				if(p.getName().contains(name.trim().toLowerCase())) {
+					res.add(e);
+				}
+			}
+		}
+		return res.toArray(new Movie[res.size()]);
+	}
+
+	public Movie[] searchMostVotedMovies(Integer N) {
+		Movie[] movies = movieData.getData().toArray(new Movie[movieData.getData().size()]);
+		switch(algorithm) {
+		case QuickSort:
+			QuickSort.getInstance().sort(movies, 0, movies.length-1, Comparators.Vote.reversed());
+			break;
+			
+		case SelectionSort:
+			SelectionSort.getInstance().sort(movies, 0, movies.length, Comparators.Vote.reversed());
+			break;
+		}
+		Movie[] res = new Movie[N<movies.length ? N : movies.length];
+		for(int i=0; i<N && i<movies.length; i++) {
+			res[i]=movies[i];
+		}
+		return res;
+	}
+	
+	public Movie[] searchMostRecentMovies(Integer N) {
+		Movie[] movies = movieData.getData().toArray(new Movie[movieData.getData().size()]);
+		switch(algorithm) {
+		case QuickSort:
+			QuickSort.getInstance().sort(movies, 0, movies.length-1, Comparators.Date.reversed());
+			break;
+			
+		case SelectionSort:
+			SelectionSort.getInstance().sort(movies, 0, movies.length, Comparators.Date.reversed());
+			break;
+		}
+		Movie[] res = new Movie[N<movies.length ? N : movies.length];
+		for(int i=0; i<N && i<movies.length; i++) {
+			res[i]=movies[i];
+		}
+		return res;
+	}
+	
+	public Person[] searchMostActiveActors(Integer N) {
+		HashSet<Person> actors = new HashSet<Person>();
+		Movie[] movies = movieData.getData().toArray(new Movie[movieData.getData().size()]);
+		for(Movie m: movies) {
+			for(Person c: m.getCast()) {
+				actors.add(c);
+			}
+		}
+		Person[] actorsArray = actors.toArray(new Person[actors.size()]);
+		switch(algorithm) {
+		case QuickSort:
+			QuickSort.getInstance().sort(actorsArray, 0, actorsArray.length-1, Comparators.NumberOfMovies.reversed());
+			break;
+			
+		case SelectionSort:
+			SelectionSort.getInstance().sort(actorsArray, 0, actorsArray.length, Comparators.NumberOfMovies.reversed());
+			break;
+		}
+		Person[] res = new Person[N<actorsArray.length ? N : actorsArray.length];
+		for(int i=0; i<N && i<actorsArray.length; i++) {
+			res[i]=actorsArray[i];
+		}
+		return res;
+	}
+
 
 
 

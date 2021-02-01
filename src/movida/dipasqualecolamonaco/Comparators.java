@@ -1,6 +1,7 @@
 package movida.dipasqualecolamonaco;
 import java.util.Comparator;
 import movida.commons.Movie;
+import movida.commons.Person;
 //import movida.commons.Person;
 
 public class Comparators {
@@ -25,10 +26,10 @@ public class Comparators {
 		}
 	};
 	
-	/*public static Comparator<Person> NumberOfMovies = new Comparator<Person>() {
+	public static Comparator<Person> NumberOfMovies = new Comparator<Person>() {
 		@Override
 		public int compare(Person p1, Person p2) {
 			return p1.numberOfMovies() - p2.numberOfMovies();
 		}
-	};*/
+	};
 }

@@ -1,32 +1,8 @@
-Title:	scarface
-Year:	1983
-Director:	brian de palma
-Cast:	al pacino,	michelle pfeiffer,	steven bauer
-Votes	703754
-
-Title:	pulp fiction
-Year:	1994
-Director:	quentin tarantino
-Cast:	john travolta,	uma thurman
-Votes	1743616
-
-Title:	the sixth sense
-Year:	1999
-Director:	m. night shyamalan
-Cast:	bruce willis,	haley joel osment,	toni collette
-Votes	879298
-
 Title:	contact
 Year:	1997
 Director:	robert zemeckis
 Cast:	jodie foster,	matthew mcconaughey,	tom skerritt
 Votes	244372
-
-Title:	air force one
-Year:	1997
-Director:	wolfgang petersen
-Cast:	harrison ford,	gary oldman,	glenn close
-Votes	173540
 
 Title:	taxi driver
 Year:	1976
@@ -34,11 +10,11 @@ Director:	martin scorsese
 Cast:	robert de niro,	jodie foster,	cybill shepherd,	albert brooks
 Votes	684728
 
-Title:	what lies beneath
-Year:	2000
-Director:	robert zemeckis
-Cast:	harrison ford,	michelle pfeiffer,	katharine towne
-Votes	114295
+Title:	scarface
+Year:	1983
+Director:	brian de palma
+Cast:	al pacino,	michelle pfeiffer,	steven bauer
+Votes	703754
 
 Title:	the fugitive
 Year:	1993
@@ -52,9 +28,33 @@ Director:	martin scorsese
 Cast:	robert de niro,	nick nolte,	jessica lange,	juliette lewis
 Votes	163093
 
+Title:	pulp fiction
+Year:	1994
+Director:	quentin tarantino
+Cast:	john travolta,	uma thurman
+Votes	1743616
+
 Title:	die hard
 Year:	1988
 Director:	john mctiernan
 Cast:	bruce willis,	alan rickman,	bonnie bedelia
 Votes	755228
+
+Title:	the sixth sense
+Year:	1999
+Director:	m. night shyamalan
+Cast:	bruce willis,	haley joel osment,	toni collette
+Votes	879298
+
+Title:	what lies beneath
+Year:	2000
+Director:	robert zemeckis
+Cast:	harrison ford,	michelle pfeiffer,	katharine towne
+Votes	114295
+
+Title:	air force one
+Year:	1997
+Director:	wolfgang petersen
+Cast:	harrison ford,	gary oldman,	glenn close
+Votes	173540
 
