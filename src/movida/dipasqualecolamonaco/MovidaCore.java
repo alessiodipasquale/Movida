@@ -7,18 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-
-import movida.commons.IMovidaDB;
-import movida.commons.MapImplementation;
-import movida.commons.MovidaFileException;
-import movida.commons.Movie;
-import movida.commons.Person;
+import java.util.List;
 
 public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch{
 	Database db;
 	Map<String, Movie> movieData;
 	Map<String, Person> personData;
-	
+	ArrayList<Collaboration> collaborations;
+
 	SortingAlgorithm algorithm = SortingAlgorithm.QuickSort;
 	MapImplementation map = MapImplementation.HashConcatenamento;
 
@@ -37,7 +33,8 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch{
 		}
 		movieData = db.getMovieData();
 		personData = db.getPersonData();
-		//AGGIUNGI GRAFO
+		collaborations = db.getCollaborations();
+
 		return;
 	}
 	

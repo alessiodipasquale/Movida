@@ -1,5 +1,6 @@
 package movida.dipasqualecolamonaco;
 import java.io.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,12 +10,14 @@ import movida.commons.MovidaFileException;
 import movida.commons.Movie;
 import movida.commons.Person;
 import movida.commons.MapImplementation;
+import movida.commons.Collaboration;
 
 
 public class Database {
 	private MapImplementation selectedStructure;
 	private Map<String, Person> personData;
 	private Map<String, Movie> movieData;
+	private ArrayList<Collaboration> collaborations;
 	
 	public void load(final File f) throws MovidaFileException, FileNotFoundException  {
 		
@@ -43,7 +46,7 @@ public class Database {
 				
 		}
 
-		
+		this.collaborations = new ArrayList<Collaboration>();
 		//System.out.println(personData.toString());
 		
 		List<Person> cast;
@@ -75,7 +78,7 @@ public class Database {
 			String[] names = formatLine(line).split(", ");
 
 
-			for (int i = 0; i < names.length; i++)  		
+			for (int i=0; i<names.length; i++)  		
 			{			
 				String name = names[i].trim().toLowerCase();
 				personToAdd = new Person(name);
@@ -90,7 +93,6 @@ public class Database {
 			Person[] castArray = cast.toArray(new Person[cast.size()]);
 			Movie movieToAdd = new Movie(title, year, votes, castArray, director);
 			
-			//popola lista di film per ogni attore
 			for (Person p : movieToAdd.getCast())
 			{
 				p.getMovies().add(movieToAdd);
@@ -98,6 +100,15 @@ public class Database {
 			director.getMovies().add(movieToAdd);
 			
 			movieData.putIfAbsent(movieToAdd.getTitle(), movieToAdd);
+			
+			//Grafo
+			for(Person person1: movieToAdd.getCast()) {
+				for(Person person2: movieToAdd.getCast()) {
+					if(person1 != person2) {
+						createCollaboration(person1,person2,movieToAdd);
+					}
+				}
+			}
 			
 			if (scan.hasNextLine())
 			{
@@ -111,6 +122,28 @@ public class Database {
 		scan.close();	
 	}
 	
+	public void createCollaboration(Person p1, Person p2, Movie m) {
+		boolean exist = false;
+		for(Collaboration c: p1.getCollaborations()) {
+			if(c.getActorA() == p2 || c.getActorB() == p2) {
+				exist = true;
+				if(!c.containsMovie(m))
+					c.addMovie(m);
+			}
+		}
+		
+		if(!exist) {
+			Collaboration collab = new Collaboration(p1,p2);
+			
+			collab.addMovie(m);
+			
+			p1.addCollaboration(collab);
+			p2.addCollaboration(collab);
+			
+			this.collaborations.add(collab);
+		}
+	}
+	
 	public Map<String, Person> getPersonData() {
 		return personData;
 	}
@@ -118,6 +151,11 @@ public class Database {
 	public Map<String, Movie> getMovieData() {
 		return movieData;
 	}
+	
+	public ArrayList<Collaboration> getCollaborations() {
+		return this.collaborations;
+	};
+
 	
 	private String formatLine(String line) {
 		int index = line.indexOf(':');

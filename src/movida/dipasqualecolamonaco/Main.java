@@ -1,6 +1,7 @@
 package movida.dipasqualecolamonaco;
 import java.io.File;
 
+import movida.commons.Collaboration;
 import movida.commons.MapImplementation;
 import movida.commons.Movie;
 import movida.commons.Person;
@@ -35,12 +36,15 @@ public class Main {
 			System.out.println(m[i++].getTitle());
 		}*/
 		
-		for(Person e: mc.searchMostActiveActors(5)) {
-			System.out.println(e.getName());
-		}
+		/* Test collaboration
+		for(Person e: mc.searchMostActiveActors(1)) {
+			for( Collaboration c :e.getCollaborations()) {
+				System.out.println(c.getActorA()+ " "+c.getActorB()+" "+c.getMovies());
+			}
+		}*/
 		
 		
-		mc.saveToFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/output.txt"));
+		//mc.saveToFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/output.txt"));
 
 	}
 

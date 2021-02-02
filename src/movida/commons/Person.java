@@ -9,6 +9,7 @@
 package movida.commons;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe usata per rappresentare una persona, attore o regista,
@@ -26,12 +27,13 @@ public class Person {
 
 	private String name;
 	private ArrayList<Movie> movies;
+	private ArrayList<Collaboration> collaborations;
 
 	
 	public Person(String name) {
 		this.name = name;
 		this.movies = new ArrayList<Movie>();
-
+		this.collaborations = new ArrayList<Collaboration>();
 	}
 	
 	public String getName(){
@@ -39,11 +41,27 @@ public class Person {
 	}
 	
 	public ArrayList<Movie> getMovies() {
-		return movies;
+		return this.movies;
+	}
+	
+	public ArrayList<Collaboration> getCollaborations() {
+		return this.collaborations;
+	}
+	
+	public void addCollaboration(Collaboration c) {
+		this.collaborations.add(c);
+	}
+	
+	public void removeCollaboration(Collaboration c) {
+		this.collaborations.remove(c);
+	}
+	
+	public boolean collaborationExist(Collaboration c) {
+		return this.collaborations.contains(c);
 	}
 	
 	public int numberOfMovies() {
-		return movies.size();
+		return this.movies.size();
 	}
 	
 	@Override
