@@ -36,12 +36,20 @@ public class Main {
 			System.out.println(m[i++].getTitle());
 		}*/
 		
-		/* Test collaboration
-		for(Person e: mc.searchMostActiveActors(1)) {
+		
+		/*for(Person e: mc.searchMostActiveActors(1)) {
 			for( Collaboration c :e.getCollaborations()) {
-				System.out.println(c.getActorA()+ " "+c.getActorB()+" "+c.getMovies());
+				System.out.println(c.getActorA()+ " "+c.getActorB()+" "+c.getMovies()+" "+c.getScore());
 			}
 		}*/
+		
+		/*Person e = mc.getPersonByName("robert de niro");
+			for(Person p: mc.getTeamOf(e)) {
+				System.out.println(p.getName());
+			}*/
+		
+		
+		
 		
 		
 		//mc.saveToFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/output.txt"));

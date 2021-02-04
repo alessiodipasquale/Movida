@@ -5,11 +5,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
-public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch{
+public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMovidaCollaborations{
 	Database db;
 	Map<String, Movie> movieData;
 	Map<String, Person> personData;
@@ -272,6 +277,44 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch{
 		return res;
 	}
 
+	//Collaborations
+	
+	public Person[] getDirectCollaboratorsOf(Person actor) {
+		ArrayList<Person> res = new ArrayList<Person>();
+		for(Collaboration c: actor.getCollaborations()) {
+			if(c.getActorA() == actor)
+				res.add(c.getActorB());
+			else
+				res.add(c.getActorA());
+		}
+		return res.toArray(new Person[res.size()]);
+	}
+
+	public Person[] getTeamOf(Person actor) {
+		ArrayList<Person> res = new ArrayList<Person>();
+		Queue<Person> queue = new LinkedList<Person>();
+		HashMap<Person, Boolean> mark = new HashMap<Person, Boolean>();
+		queue.add(actor);
+		mark.put(actor, true);
+		while(!queue.isEmpty()) {
+			Person tmp = queue.remove();
+			for(Collaboration collab : tmp.getCollaborations()) {
+				Person adjacent = (collab.getActorA().equals(tmp)) ? collab.getActorB() : collab.getActorA();
+				if(!mark.containsKey(adjacent) || mark.get(adjacent) == false) {
+					queue.add(adjacent);
+					mark.put(adjacent, true);
+					res.add(adjacent);
+				}
+			}
+		}
+		
+		return res.toArray(new Person[res.size()]);
+
+	}
+	
+	public Collaboration[] maximizeCollaborationsInTheTeamOf(Person actor) {
+		return null;
+	}
 
 
 
