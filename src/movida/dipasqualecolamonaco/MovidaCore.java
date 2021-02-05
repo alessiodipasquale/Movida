@@ -313,7 +313,32 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 	}
 	
 	public Collaboration[] maximizeCollaborationsInTheTeamOf(Person actor) {
-		return null;
+		Person [] team = getTeamOf(actor);
+		HashMap<Collaboration, Double> res = new HashMap<Collaboration, Double>();
+		HashMap<Person, Double> d = new HashMap<Person, Double>();
+		for(Person p: team) {
+			d.putIfAbsent(p, Double.MAX_VALUE);
+		}
+		d.put(actor, 0.);
+		Queue<Person> queue = new LinkedList<Person>();
+		queue.add(actor);
+		while(!queue.isEmpty()) {
+			Person tmp = queue.remove();
+			for(Collaboration collab : tmp.getCollaborations()) {
+				Person adjacent = (collab.getActorA().equals(tmp)) ? collab.getActorB() : collab.getActorA();
+				if(d.get(adjacent) == Double.MAX_VALUE) {
+					queue.add(adjacent);
+					d.put(adjacent, collab.getScore());
+					res.put(collab, collab.getScore());
+				} else if(collab.getScore() > d.get(adjacent)) {
+					queue.add(adjacent);
+					d.put(adjacent, collab.getScore());
+					res.put(collab, collab.getScore());
+				}
+			}
+		}
+
+		return res.keySet().toArray(new Collaboration[res.keySet().size()]);
 	}
 
 

@@ -50,7 +50,10 @@ public class Main {
 		
 		
 		
-		
+		Person e = mc.getPersonByName("robert de niro");
+		for(Collaboration p: mc.maximizeCollaborationsInTheTeamOf(e)) {
+			System.out.println(p.getActorA()+" "+p.getActorB()+" "+p.getScore());
+		}
 		
 		//mc.saveToFile(new File("/Users/alessiodipasquale/Projects/Movida/src/movida/dipasqualecolamonaco/output.txt"));
 
