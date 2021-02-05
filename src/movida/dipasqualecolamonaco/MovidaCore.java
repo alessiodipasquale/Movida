@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMovidaCollaborations{
 	Database db;
@@ -320,7 +321,7 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 			d.putIfAbsent(p, Double.MAX_VALUE);
 		}
 		d.put(actor, 0.);
-		Queue<Person> queue = new LinkedList<Person>();
+		PriorityQueue<Person> queue = new PriorityQueue<Person>((p1,p2) -> d.get(p1).compareTo(d.get(p2))); //priorità per score
 		queue.add(actor);
 		while(!queue.isEmpty()) {
 			Person tmp = queue.remove();
@@ -341,7 +342,46 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 		return res.keySet().toArray(new Collaboration[res.keySet().size()]);
 	}
 
+	public Collaboration[] maximizeCollaborationsInTheTeamOf2(Person actor) {
 
+		Person [] team = getTeamOf(actor);
+		HashMap<Person, LinkedList<Person>> rep = new HashMap<>();		//associa ogni elemento alla lista che lo contiene
+		ArrayList<Collaboration> toReturn = new ArrayList<Collaboration>();
+		List<Collaboration> collabs = new ArrayList<Collaboration>();
+		rep.put(actor, new LinkedList<Person>());
+		rep.get(actor).add(actor);
+		for (Person p : team) 
+		{
+			rep.putIfAbsent(p, new LinkedList<Person>());
+			rep.get(p).add(p);
+			collabs.addAll(p.getCollaborations());
+		}
+		collabs = collabs.stream().distinct()
+				.sorted((a, b) -> b.getScore().compareTo(a.getScore()))
+				.collect(Collectors.toList());
+				
+		for (Collaboration c : collabs)
+		{
+			Person a = c.getActorA();
+			Person b = c.getActorB();
+			if(rep.get(a) != rep.get(b))				//se la lista associata � diversa gli insiemi sono disgiunti
+			{
+				toReturn.add(c);
+				if (rep.get(a).size() <= rep.get(b).size())
+				{
+					rep.get(b).addAll(rep.get(a));
+					rep.replace(a, rep.get(b));					
+				}
+				else
+				{
+					rep.get(a).addAll(rep.get(b));
+					rep.replace(b, rep.get(a));	
+				}
+			}
+		}
+		
+		return toReturn.toArray(Collaboration[]::new);
+	}
 
 }
 

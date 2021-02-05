@@ -50,7 +50,7 @@ public class Main {
 		
 		
 		
-		Person e = mc.getPersonByName("robert de niro");
+		Person e = mc.getPersonByName("al pacino");
 		for(Collaboration p: mc.maximizeCollaborationsInTheTeamOf(e)) {
 			System.out.println(p.getActorA()+" "+p.getActorB()+" "+p.getScore());
 		}
