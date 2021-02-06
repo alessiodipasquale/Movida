@@ -2,7 +2,6 @@ package movida.dipasqualecolamonaco;
 import java.util.Comparator;
 import movida.commons.Movie;
 import movida.commons.Person;
-//import movida.commons.Person;
 
 public class Comparators {
 	public static Comparator<Movie> Title = new Comparator<Movie>() {

@@ -10,12 +10,6 @@ Director:	martin scorsese
 Cast:	robert de niro,	jodie foster,	cybill shepherd,	albert brooks
 Votes	684728
 
-Title:	scarface
-Year:	1983
-Director:	brian de palma
-Cast:	al pacino,	michelle pfeiffer,	steven bauer
-Votes	703754
-
 Title:	the fugitive
 Year:	1993
 Director:	andrew davis

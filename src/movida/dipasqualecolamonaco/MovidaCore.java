@@ -60,7 +60,7 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 				save.append("Cast:" + "\t");
 				for (int i = 0; i < cast.length; i++) {
 					if (i == cast.length - 1)
-						save.append(cast[i].getName() + "\n"); // l'ultimo elemento non ha la virgola
+						save.append(cast[i].getName() + "\n");
 					else
 						save.append(cast[i].getName() + "," + "\t");
 				}
@@ -123,7 +123,6 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 		int i = 0;
 		for (Movie e : movieData.getData()) {
 			arr[i++] = e;
-			//System.out.println(e.getValue().getTitle());
 		}
 		return arr;
 	}
@@ -134,12 +133,11 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 		int i = 0;			
 		for (Person e : personData.getData()) {
 			arr[i++] = e;
-			//System.out.println(e.getValue().getName());
 		}
 		return arr;
 	}
 
-	//FINE DB E INIZIO CONFIG
+	//IMovidaconfig
 	
 	@Override
 	public boolean setSort(SortingAlgorithm a) {
@@ -162,13 +160,11 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 		case HashConcatenamento: {
 			this.map = MapImplementation.HashConcatenamento;
 			this.db.setStructure(MapImplementation.HashConcatenamento);
-			// DA FARE LA COPIA
 			return true;
 		}
 		case AVL: {
 			this.map = MapImplementation.AVL;
 			this.db.setStructure(MapImplementation.AVL);
-			// DA FARE LA COPIA
 			return true;
 		}
 		default:
@@ -177,7 +173,7 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 		}
 	}
 
-	//FINE CONFIG INIZIO SEARCH
+	//IMovidaSearch
 	public Movie[] searchMoviesByTitle(String title) {
 		ArrayList<Movie> res = new ArrayList<Movie>();
 		for(Movie e: movieData.getData()) {
@@ -278,7 +274,7 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 		return res;
 	}
 
-	//Collaborations
+	//IMovidaCollaborations
 	
 	public Person[] getDirectCollaboratorsOf(Person actor) {
 		ArrayList<Person> res = new ArrayList<Person>();
@@ -340,47 +336,6 @@ public class MovidaCore implements IMovidaDB, IMovidaConfig, IMovidaSearch, IMov
 		}
 
 		return res.keySet().toArray(new Collaboration[res.keySet().size()]);
-	}
-
-	public Collaboration[] maximizeCollaborationsInTheTeamOf2(Person actor) {
-
-		Person [] team = getTeamOf(actor);
-		HashMap<Person, LinkedList<Person>> rep = new HashMap<>();		//associa ogni elemento alla lista che lo contiene
-		ArrayList<Collaboration> toReturn = new ArrayList<Collaboration>();
-		List<Collaboration> collabs = new ArrayList<Collaboration>();
-		rep.put(actor, new LinkedList<Person>());
-		rep.get(actor).add(actor);
-		for (Person p : team) 
-		{
-			rep.putIfAbsent(p, new LinkedList<Person>());
-			rep.get(p).add(p);
-			collabs.addAll(p.getCollaborations());
-		}
-		collabs = collabs.stream().distinct()
-				.sorted((a, b) -> b.getScore().compareTo(a.getScore()))
-				.collect(Collectors.toList());
-				
-		for (Collaboration c : collabs)
-		{
-			Person a = c.getActorA();
-			Person b = c.getActorB();
-			if(rep.get(a) != rep.get(b))				//se la lista associata � diversa gli insiemi sono disgiunti
-			{
-				toReturn.add(c);
-				if (rep.get(a).size() <= rep.get(b).size())
-				{
-					rep.get(b).addAll(rep.get(a));
-					rep.replace(a, rep.get(b));					
-				}
-				else
-				{
-					rep.get(a).addAll(rep.get(b));
-					rep.replace(b, rep.get(a));	
-				}
-			}
-		}
-		
-		return toReturn.toArray(Collaboration[]::new);
 	}
 
 }

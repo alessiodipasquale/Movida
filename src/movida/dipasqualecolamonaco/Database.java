@@ -47,7 +47,6 @@ public class Database {
 		}
 
 		this.collaborations = new ArrayList<Collaboration>();
-		//System.out.println(personData.toString());
 		
 		List<Person> cast;
 		Person personToAdd = null;
@@ -67,9 +66,6 @@ public class Database {
 
 			director = new Person(directorName);
 			personData.putIfAbsent(directorName, director);
-			
-			//System.out.println(personData.toString());
-
 			
 			director = personData.search(directorName);
 			
@@ -101,7 +97,7 @@ public class Database {
 			
 			movieData.putIfAbsent(movieToAdd.getTitle(), movieToAdd);
 			
-			//Grafo
+			//Collaboartions
 			for(Person person1: movieToAdd.getCast()) {
 				for(Person person2: movieToAdd.getCast()) {
 					if(person1 != person2) {
@@ -115,9 +111,6 @@ public class Database {
 				scan.nextLine();				
 			}
 		}
-		
-		//TEST
-		System.out.println("Conclusa lettura");
 		
 		scan.close();	
 	}
@@ -164,7 +157,6 @@ public class Database {
 	}
 	
 	public void setStructure (MapImplementation s) {
-		
 		selectedStructure = s;
 	}
 

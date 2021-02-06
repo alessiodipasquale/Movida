@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
-	V t;
+
 	private int numNodes = 0;
 
 	private Node root;
+	
+	public AVL() {}
 
     void updateHeight(Node n) {
         n.height = 1 + Math.max(height(n.left), height(n.right));
@@ -62,9 +64,7 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
         }
         return z;
     }
-	
-	public AVL() {}
-	
+		
 	public void delete(K key) {
 		key = (K)key.toString().trim().toLowerCase();
 		this.root = this.delete(root,key);
@@ -95,7 +95,6 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	
 	private Node mostLeftChild(Node node) {
         Node current = node;
-        /* loop down to find the leftmost leaf */
         while (current.left != null) {
             current = current.left;
         }
@@ -116,9 +115,7 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	        node.left = insert(node.left, key, value);
 	    } else if (node.key.compareTo(key) < 0) {
 	        node.right = insert(node.right, key, value);
-	    } /* else {
-	        throw new RuntimeException("duplicate Key");
-	    }*/
+	    }
 	    return rebalance(node);
 	}
 	
@@ -134,9 +131,6 @@ public class AVL<K extends Comparable<K>,V extends Object> extends Map<K,V> {
 	        }
 	        return (V)current.value;
 	}
-	/*public V search(K key) {
-		
-	}*/
 
 	@Override
 	public int length() {
